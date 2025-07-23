@@ -1,7 +1,12 @@
 package org.fastcampus.student_management;
 
 import org.fastcampus.student_management.application.course.CourseService;
+import org.fastcampus.student_management.application.course.dto.CourseInfoDto;
 import org.fastcampus.student_management.application.student.StudentService;
+import org.fastcampus.student_management.application.student.dto.StudentInfoDto;
+import org.fastcampus.student_management.domain.Course;
+import org.fastcampus.student_management.domain.DayOfWeek;
+import org.fastcampus.student_management.domain.Student;
 import org.fastcampus.student_management.repo.CourseRepository;
 import org.fastcampus.student_management.repo.StudentRepository;
 import org.fastcampus.student_management.ui.course.CourseController;
@@ -24,6 +29,18 @@ public class Main {
 
     CourseController courseController = new CourseController(coursePresenter, courseService, studentPresenter);
     StudentController studentController = new StudentController(studentPresenter, studentService);
+
+    StudentInfoDto studentInfoDto = new StudentInfoDto("김구라", 20, "영동군");
+    StudentInfoDto studentInfoDto1 = new StudentInfoDto("김말자", 20, "황간면");
+
+    CourseInfoDto course = new CourseInfoDto("화학", 200000, DayOfWeek.MONDAY.toString(), "김구라",1000L);
+    CourseInfoDto course1 = new CourseInfoDto("수학", 200000, DayOfWeek.MONDAY.toString(), "김말자",1000L);
+
+    studentService.saveStudent(studentInfoDto);
+    studentService.saveStudent(studentInfoDto1);
+
+    courseService.registerCourse(course1);
+    courseService.registerCourse(course);
 
     studentPresenter.showMenu();
     UserInputType userInputType = studentController.getUserInput();
@@ -52,7 +69,7 @@ public class Main {
           break;
       }
       studentPresenter.showMenu();
-      userInputType = studentController.getUserInput();
+      userInputType =studentController .getUserInput();
     }
   }
 }

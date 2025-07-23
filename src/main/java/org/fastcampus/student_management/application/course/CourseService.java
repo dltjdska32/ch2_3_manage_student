@@ -5,6 +5,7 @@ import java.util.List;
 import org.fastcampus.student_management.application.course.dto.CourseInfoDto;
 import org.fastcampus.student_management.application.student.StudentService;
 import org.fastcampus.student_management.domain.Course;
+import org.fastcampus.student_management.domain.CourseList;
 import org.fastcampus.student_management.domain.DayOfWeek;
 import org.fastcampus.student_management.domain.Student;
 import org.fastcampus.student_management.repo.CourseRepository;
@@ -25,11 +26,28 @@ public class CourseService {
   }
 
   public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
-    // TODO: 과제 구현 부분
-    return new ArrayList<>();
+    List<Course> courseDayOfWeek = courseRepository.getCourseDayOfWeek(dayOfWeek);
+    //List<CourseInfoDto> courseInfoDtoList = convertToCourseInfoDto(courseDayOfWeek);
+    // 람다식
+    //Course객체를 .map(CourseInfoDto::new)을 통해서 CourseInfoDto 생성자 호출하여 변환.
+    return courseDayOfWeek.stream().map(CourseInfoDto::new).toList();
   }
 
   public void changeFee(String studentName, int fee) {
-    // TODO: 과제 구현 부분
+    List<Course> courses = courseRepository.getCourseListByStudent(studentName);
+    CourseList courseList = new CourseList(courses);
+    courseList.changeAllCourseFee(fee);
   }
+
+
 }
+
+
+/*  private List<CourseInfoDto> convertToCourseInfoDto(List<Course> courseDayOfWeek) {
+    List<CourseInfoDto> courseInfoDtoList = new ArrayList<>();
+    for(Course course : courseDayOfWeek) {
+      CourseInfoDto courseInfoDto = new CourseInfoDto(course);
+      courseInfoDtoList.add(courseInfoDto);
+    }
+    return courseInfoDtoList;
+  }*/

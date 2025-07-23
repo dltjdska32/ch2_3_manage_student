@@ -18,6 +18,20 @@ public class Student {
     this.activated = true;
   }
 
+  public void activate() {
+    if(this.activated){
+      throw new IllegalArgumentException();
+    }
+    this.activated = true;
+  }
+
+  public void deactivate() {
+    if(!this.activated) {
+      throw new IllegalArgumentException();
+    }
+    this.activated = false;
+  }
+
   public String getName() {
     return name;
   }
@@ -29,6 +43,7 @@ public class Student {
   public String getAddress() {
     return address;
   }
+
   public boolean isActivate() {
     return activated;
   }
